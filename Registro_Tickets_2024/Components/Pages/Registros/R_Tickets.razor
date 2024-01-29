@@ -1,4 +1,4 @@
-﻿@page "/ConsultaTickets"
+﻿@page "/RegistroTickets"
 @rendermode InteractiveServer
 @inject TicketServices ticketServices
 @inject PrioridadServices prioridadServices
@@ -70,19 +70,9 @@
 
             <div class="card-footer justify-content-center">
                 <div class="input-group">
-                    <a href="/IndexTickets" class="btn btn-primary bi bi-house-door-fill">Volver</a>
-                    <button type="button" class="btn btn-secondary bi bi-file-earmark-diff-fill" @onclick="Nuevo" @oninput="MensajeGuardar">Nuevo</button>
-                    <button type="submit" class="btn btn-success bi bi-floppy-fill">Guardar</button>
-                </div>
-                <div class="col col-3">
-                    @if (resultado == 1)
-                    {
-                        <p class="alert-success form-control m-1">@mensaje</p>
-                    }
-                    else if (resultado == 2)
-                    {
-                        <p class="alert-danger form-control m-1">@mensaje</p>
-                    }
+                    <a href="/ConsultaTickets" class="btn btn-outline-danger bi bi-house-door-fill">Volver</a>
+                    <button type="button" class="btn btn-outline-primary bi bi-file-earmark-diff-fill" @onclick="Nuevo">Nuevo</button>
+                    <button type="submit" class="btn btn-outline-success bi bi-floppy-fill">Guardar</button>
                 </div>
             </div>
 
@@ -98,8 +88,6 @@
     public List<Clientes> ListaClientes { get; set; } = new List<Clientes>();
 
     public string? mensaje { get; set; }
-    public int resultado { get; set; }
-    public int Opcion { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -112,7 +100,6 @@
     public void Nuevo()
     {
         tickets = new Tickets();
-        MensajeGuardar();
         tickets.Fecha = DateTime.Today;
     }
 
@@ -121,20 +108,11 @@
         var guardo = await ticketServices.Guardar(tickets);
         if (guardo)
         {
-            resultado = 1;
             mensaje = "Cambios Guardados";
         }
         else
         {
-            resultado = 2;
             mensaje = "Registro No Guardado";
         }
     }
-
-    public void MensajeGuardar()
-    {
-        resultado = 0;
-        mensaje = string.Empty;
-    }
-
 }

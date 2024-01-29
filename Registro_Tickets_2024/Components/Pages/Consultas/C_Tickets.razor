@@ -1,0 +1,126 @@
+﻿@page "/ConsultaTickets"
+@rendermode InteractiveServer
+@inject TicketServices ticketServices;
+
+<PageTitle>Tickets</PageTitle>
+
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h3>Tickets</h3>
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="input-group d-flex aling-items-end">
+                    <InputSelect class="form-select col-2" @bind-Value="Opcion">
+                        <option value="1">Id Ticket</option>
+                        <option value="3">Fecha</option>
+                    </InputSelect>
+
+                    <div class="flex-fill mx-2">
+                        <div class="input-group">
+                            <label class="input-group-text"> Busqueda </label>
+
+                            <div class="col-auto">
+                                @switch (Opcion)
+                                {
+                                    case 1:
+                                        <div class="input-group">
+                                            <InputNumber @bind-Value="tickets.TicketId" class="form-control" min="0"></InputNumber>
+                                            <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
+                                        </div>
+                                        break;
+                                    case 2:
+                                        <div class="input-group">
+                                            <InputText @bind-Value="tickets.Asunto" class="form-control"></InputText>
+                                            <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
+                                        </div>
+                                        break;
+                                    case 3:
+                                        <div class="input-group">
+                                            <InputDate @bind-Value="FechaInicio" class="form-control"></InputDate>
+                                            <InputDate @bind-Value="FechaFin" class="form-control"></InputDate>
+                                            <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
+                                        </div>
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/RegistroTickets" class="btn btn-success bi bi-ticket-fill mx-2"> Crear</a>
+
+                </div>
+            </form>
+        </div>
+
+        <table class="table table-bordered align-items-center">
+            <thead class="thead">
+                <tr class="table">
+
+                    <th>Asunto</th>
+                    <th>Solicitado por</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Prioridad</th>
+                    <th>Sistema</th>
+                    <th>Descripci&oacute;n</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @foreach (var item in ListTickets)
+                {
+                    <tr>
+                        <td>@item.Asunto</td>
+                        <td>@item.Solicitadopor</td>
+                        <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td>@item.ClienteId</td>
+                        <td>@item.PrioridadId</td>
+                        <td>@item.SistemaId</td>
+                        <td>@item.Descripcion</td>
+                        <td><a class="btn btn-outline-primary" href="RegistroClientes/@item.ClienteId">Ver</a></td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+        <div class="card-footer">
+            <div class="form-row justify-content-sm-between" aria-orientation="vertical">
+                <div class="col-3">
+                    <label for="CantidaRegistro" class="col-form-label"><strong>Filas: @ListTickets.Count</strong>&nbsp;</label>
+                    
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@code {
+
+    public List<Tickets> ListTickets = new List<Tickets>();
+    public Tickets tickets = new Tickets();
+    public int Opcion { get; set; }
+
+    public DateTime FechaInicio { get; set; } = DateTime.Today;
+    public DateTime FechaFin { get; set; } = DateTime.Today;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListTickets = await ticketServices.Listar(s => true);
+    }
+
+    public async Task Buscar()
+    {
+        if (Opcion == 1 && tickets.TicketId > 0)
+            ListTickets = await ticketServices.Listar(t => t.TicketId == tickets.TicketId);
+        else if (Opcion == 2 && FechaFin != default && FechaInicio != default)
+            ListTickets = await ticketServices.Listar(t => t.Fecha <= FechaFin && t.Fecha >= FechaInicio);
+        else
+            ListTickets = await ticketServices.Listar(t => true);
+    }
+}
