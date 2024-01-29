@@ -52,7 +52,6 @@
 
 @code {
     public Prioridades prioridades = new Prioridades();
-    public int resultado { get; set; }
 
     public void Nuevo()
     {
@@ -65,12 +64,7 @@
         var guardo = await prioridadesService.Guardar(prioridades);
         if (guardo)
         {
-            resultado = 1;
             prioridades = new Prioridades();
-        }
-        else
-        {
-            resultado = 2;
         }
     }
 }
