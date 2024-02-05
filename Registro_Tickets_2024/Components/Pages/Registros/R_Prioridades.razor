@@ -18,7 +18,7 @@
             <div class="card-body">
                 
                 <div class="col-4">
-                    <label class="fw-bold bi bi-calendar2-day mt-1">Prioridad Id</label>    
+                    <label class="form-label">Prioridad Id</label>
                     <InputNumber @bind-Value="prioridades.PrioridadId" class="form-control" />
                     <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
                 </div>
@@ -30,7 +30,7 @@
                 </div>
             
                 <div class="col-4">
-                    <label class="fw-bold bi bi-calendar2-day mt-1"> Dias Compromiso</label>                   
+                    <label class="form-label"> Dias Compromiso</label>
                     <InputNumber @bind-Value="prioridades.DiasCompromiso" min="0" class="form-control"></InputNumber>
                     <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
                 </div>

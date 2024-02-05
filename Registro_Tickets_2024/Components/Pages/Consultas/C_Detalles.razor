@@ -1,0 +1,71 @@
+﻿@page "/DetalleTickets";
+@page "/DetalleTickets/{TicketId:int}";
+@rendermode InteractiveServer
+@inject TicketServices ticketServices;
+
+<PageTitle>Detalle Ticket</PageTitle>
+
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h3>Detalles</h3>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">                        
+                        <div class="card-body">
+                            <p><strong>ID:</strong> @tickets.TicketId</p>
+                            <p><strong>ID Cliente:</strong> @tickets.ClienteId</p>
+                            <p><strong>ID Prioridad:</strong> @tickets.PrioridadId</p>
+                            <p><strong>ID Sistema:</strong> @tickets.SistemaId</p>
+                        </div>                       
+                    </div>
+                    <div class="col">                        
+                        <div class="card-body">
+                            <p><strong>Fecha:</strong> @tickets.Fecha.ToString("dd/MM/yyyy")</p>
+                            <p><strong>Asunto:</strong> @tickets.Asunto</p>
+                            <p><strong>Solicitado Por:</strong> @tickets.Solicitadopor</p>
+                            <p><strong>Descripci&oacute;n:</strong> @tickets.Descripcion</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end input-group">
+            <a href="/ConsultaTickets" class="btn btn-primary">Volver</a>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public int TicketId { get; set; }
+    public Tickets tickets { get; set; } = new Tickets();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (TicketId > 0)
+        {
+            tickets.TicketId = TicketId;
+            await Buscar();
+        }
+    }
+
+    public async Task Buscar()
+    {
+
+        var ticketbuscado = await ticketServices.Buscar(tickets.TicketId);
+        if (ticketbuscado != null)
+        {
+            tickets = ticketbuscado;
+        }
+        else
+        {
+            tickets = new Tickets();
+        }
+    }
+
+}

@@ -15,7 +15,7 @@
              
             <div class="card-body">
                 <div class="col col-3">
-                    <label class="fw-bold bi bi-key"> Prioridad:</label>
+                    <label class="form-label"> Prioridad:</label>
                     <InputSelect @bind-Value="tickets.PrioridadId" class="form-select">
                         @foreach (var prioridad in ListaPrioridades)
                         {
@@ -27,7 +27,7 @@
 
 
                 <div class="col col-3">
-                    <label class="fw-bold bi bi-key"> Cliente:</label>
+                    <label class="form-label"> Cliente:</label>
                     <InputSelect @bind-Value="tickets.ClienteId" class="form-select">
                         @foreach (var cliente in ListaClientes)
                         {
@@ -38,31 +38,31 @@
                 </div>
 
                 <div class="col-3">
-                    <label class="fw-bold bi bi-calendar2-day mt-1">Prioridad Id</label>
+                    <label class="form-label">Prioridad Id</label>
                     <InputNumber @bind-Value="tickets.SistemaId" class="form-control" />
                     <ValidationMessage For="@(() => tickets.SistemaId)" />
                 </div>
 
                 <div class="col-3">
-                    <label class="fw-bold bi bi-calendar-date"> Fecha</label>
+                    <label class="form-label"> Fecha</label>
                     <InputDate @bind-Value="tickets.Fecha" class="form-control"></InputDate>
                     <ValidationMessage For="@(() => tickets.Fecha)" />
                 </div>
 
                 <div class="col-3">
-                    <label class="fw-bold bi bi-person-badge-fill"> Solicitado Por:</label>
+                    <label class="form-label"> Solicitado Por:</label>
                     <InputText @bind-Value="tickets.Solicitadopor" class="form-control"></InputText>
                     <ValidationMessage For="@(() => tickets.Solicitadopor)" />
                 </div>
 
                 <div class="col-3">
-                    <label class="fw-bold bi bi-pencil-square"> Asunto:</label>
+                    <label class="form-label"> Asunto:</label>
                     <InputText @bind-Value="tickets.Asunto" class="form-control"></InputText>
                     <ValidationMessage For="@(() => tickets.Asunto)" />
                 </div>
 
                 <div class="col-6">
-                    <label class="fw-bold bi bi-card-text"> Descripci&oacute;n:</label>
+                    <label class="form-label"> Descripci&oacute;n:</label>
                     <InputText @bind-Value="tickets.Descripcion" class="form-control"></InputText>
                     <ValidationMessage For="@(() => tickets.Descripcion)" />
                 </div>

@@ -26,7 +26,7 @@
                         </div>
 
                         <button type="button" class="btn btn-sm-10 btn-primary" @onclick="Buscar"> <span class="oi oi-magnifying-glass"></span> Buscar </button>
-                        <a href="/RegistroCLientes" class="btn btn-success bi bi-ticket-fill mx-2"> Crear</a>
+                        <a href="/RegistroCLientes" class="btn btn-success mx-2"> Crear</a>
 
                     </div>
                 </form>
@@ -58,7 +58,7 @@
                             <td>@item.RNC</td>
                             <td>@item.Email</td>
                             <td>@item.Direccion</td>
-                            <td><a class="btn btn-outline-primary" href="RegistroClientes/@item.ClienteId">Ver</a></td>
+                            @*<td><a class="btn btn-outline-primary" href="RegistroClientes/@item.ClienteId">Ver</a></td>*@
                         </tr>
                     }
                 </tbody>
